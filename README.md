@@ -1,1 +1,1 @@
-## party-manager app
+## Anonymous Santa
