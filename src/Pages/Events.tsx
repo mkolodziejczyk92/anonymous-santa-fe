@@ -28,9 +28,9 @@ import pic8 from "../Assets/pic8.jpg";
 
 const GET_EVENTS_URL = "/event/user-events";
 const ADD_EVENT_URL = "/event/add";
-const DELETE_EVENT_URL = "/delete";
-const JOIN_TO_EVENT_URL = "/join-to-the-event";
-const DRAW_LOT_EVENT_URL = "/draw";
+const DELETE_EVENT_URL = "/event/delete";
+const JOIN_TO_EVENT_URL = "/event/join-to-the-event";
+const DRAW_LOT_EVENT_URL = "/event/draw";
 const GET_ALL_EVENT_PARTICIPANTS_URL = "/participants-by-event-id";
 
 const Events: React.FC = () => {
@@ -115,7 +115,7 @@ const Events: React.FC = () => {
       };
 
       const addEvents = async () => {
-        await post(`${ADD_EVENT_URL}/${token}`, dataToSend, false, token)
+        await post(`${ADD_EVENT_URL}`, dataToSend, false, token)
           .then((responseData) => {
             if (responseData) {
             }
@@ -274,7 +274,7 @@ const Events: React.FC = () => {
     } catch (error: unknown) {
       console.log("error", error);
     }
-  }, [events, token]);
+  }, []);
 
   const getFlickingItems = () => {
     return events.map((data, index) => {
