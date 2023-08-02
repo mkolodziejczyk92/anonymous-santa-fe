@@ -1,0 +1,184 @@
+@import "../node_modules/slick-carousel/slick/slick.css";
+@import "../node_modules/slick-carousel/slick/slick-theme.css";
+
+.AppContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: gainsboro;
+  width: calc(100% - 250px);
+  height: calc(100% - 80px);
+  gap: 10pt;
+  float: right;
+  position: relative;
+}
+
+.EventsButtonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.EventsButton {
+  background-color: black;
+  color: whitesmoke;
+  height: 30pt;
+  width: 80pt;
+  border-radius: 5pt;
+  cursor: pointer;
+}
+
+.EventsFormContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  /* backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px); */
+}
+
+.EventsSliderContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.EventsParticipantsModalWindow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  /* -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px); */
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.EventsParticipantsModalContainer {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 300px;
+  padding: 15px 0;
+  border-radius: 10px;
+  box-shadow: 1px 0px 49px 8px rgba(0, 0, 0, 0.33);
+  -webkit-box-shadow: 1px 0px 49px 8px rgba(0, 0, 0, 0.33);
+  -moz-box-shadow: 1px 0px 49px 8px rgba(0, 0, 0, 0.33);
+  background-color: gainsboro;
+}
+
+.EventsParticipantsModalTitle {
+  margin: 0;
+}
+
+.EventsParticipantsModalItemsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  z-index: 2;
+  width: 100%;
+  height: 200px;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.EventsParticipantsModalItemContainer {
+  flex-direction: row;
+  gap: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.EventsParticipantsModalItemInput {
+  justify-content: space-between;
+  border: 1px solid rgb(185, 195, 190);
+  padding: 10px 12px;
+  width: 120px;
+}
+
+.EventsParticipantsModalItemTakePartInButton,
+.EventsParticipantsModalItemNotTakePartInButton {
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+
+.EventsParticipantsModalItemTakePartInButton {
+  background-color: greenyellow;
+}
+
+.EventsParticipantsModalItemNotTakePartInButton {
+  background-color: red;
+}
+
+.EventsParticipantsModalButtonsContainer {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.EventsParticipantsModalDrawLotsButton,
+.EventsParticipantsModalCloseButton {
+  background-color: rgb(8, 2, 43);
+  color: whitesmoke;
+  height: 30pt;
+  width: 70pt;
+  border-radius: 5pt;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.EventsParticipantsModalDrawLotsButton:disabled,
+.EventsParticipantsModalDrawLotsButton[disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+.EventsParticipantsModalCloseButton {
+  background-color: red;
+}
+
+.slick-prev {
+  left: 0% !important;
+  z-index: 1;
+}
+.slick-next {
+  right: 1% !important;
+  z-index: 1;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+  font-size: 30px;
+}

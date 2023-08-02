@@ -1,0 +1,77 @@
+.EventItem {
+  list-style-type: none;
+  background-color: #56746c;
+  width: 400px;
+  height: 250px;
+  display: flex;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.7px);
+  -webkit-backdrop-filter: blur(8.7px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.EventItemPicture {
+  margin: 10px;
+  padding-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.EventItemPicture img {
+  width: 200px;
+}
+
+.EventItemData {
+  position: relative;
+  display: block;
+  margin: 5px 10px 5px 10px;
+  padding-right: 5px;
+}
+
+.EventItemData p {
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.EventsItemDeleteButton,
+.EventsItemParticipantsButton {
+  background-color: rgb(8, 2, 43);
+  color: whitesmoke;
+  height: 30pt;
+  width: 70pt;
+  border-radius: 5pt;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.EventsItemDeleteButton:disabled,
+.EventsItemDeleteButton[disabled="true"],
+.EventsItemParticipantsButton:disabled,
+.EventsItemParticipantsButton[disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+.EventsItemDeleteButton {
+  background-color: red;
+}
+
+.EventItemButtonsContainer {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
