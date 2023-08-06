@@ -56,10 +56,11 @@ const Events: React.FC = () => {
     dataToSend.set("eventID", data.id);
     dataToSend.set("userEmail", data.email);
     dataToSend.set("eventPassword", data.password);
-
+  
     try {
       const joinToEvent = async () => {
-        await post(`${JOIN_TO_EVENT_URL}`, dataToSend, false, token)
+        const jsonData = Object.fromEntries(dataToSend);
+        await post(`${JOIN_TO_EVENT_URL}`, JSON.stringify(jsonData), false, token)
           .then((responseData) => {
             if (responseData) {
             }
@@ -68,7 +69,6 @@ const Events: React.FC = () => {
             console.log(error);
           });
       };
-
       joinToEvent();
     } catch (error: unknown) {
       console.log("error", error);
@@ -250,11 +250,12 @@ const Events: React.FC = () => {
                   id: (data.id as number).toFixed(),
                   budget: data.budget,
                   currency: data.currency,
-                  date: data.eventDate.toISOString(),
+                  date: new Date(data.eventDate).toLocaleDateString("en-GB"),
                   name: data.name,
                   peopleAmount: data.numberOfPeople,
                   picture: "../Assets/" + data.imageUrl,
                   organizerId: data.organizerId,
+                  logInUserIsAnOrganizer: data.logInUserIsAnOrganizer,
                   deleteCallback: deleteEventCallback,
                   openParticipantsCallback: openParticipantsCallback,
                 };
@@ -287,6 +288,7 @@ const Events: React.FC = () => {
         peopleAmount,
         picture,
         organizerId,
+        logInUserIsAnOrganizer,
       } = data;
       return (
         <EventItem
@@ -301,6 +303,7 @@ const Events: React.FC = () => {
           organizerId={organizerId}
           deleteCallback={deleteEventCallback}
           openParticipantsCallback={openParticipantsCallback}
+          logInUserIsAnOrganizer={logInUserIsAnOrganizer}
         ></EventItem>
       );
     });

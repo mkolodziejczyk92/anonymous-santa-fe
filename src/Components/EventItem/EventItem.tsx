@@ -10,6 +10,7 @@ export type EventItemPropsType = {
   currency: string;
   picture: string;
   participants?: EventItemParticipantsType[];
+  logInUserIsAnOrganizer?: boolean;
   organizerId?: string;
   deleteCallback?: (id: string) => void;
   openParticipantsCallback?: (id: string) => void;
@@ -37,6 +38,7 @@ const EventItem = ({
   deleteCallback,
   openParticipantsCallback,
   organizerId,
+  logInUserIsAnOrganizer,
 }: EventItemPropsType) => {
   const { token } = useAuth();
 
@@ -57,14 +59,14 @@ const EventItem = ({
         <div className="EventItemButtonsContainer">
           <button
             className="EventsItemParticipantsButton"
-            disabled={organizerId === token ? false : true}
+            style={{display: logInUserIsAnOrganizer ? "block" : "none"}}
             onClick={openParticipants}
           >
             Participants
           </button>
           <button
             className="EventsItemDeleteButton"
-            disabled={organizerId === token ? false : true}
+            style={{display: logInUserIsAnOrganizer ? "block" : "none"}}
             onClick={deleteEvent}
           >
             Delete

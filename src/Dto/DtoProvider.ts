@@ -6,10 +6,11 @@ export type EventDto = {
   budget: number;
   currency: string;
   imageUrl?: string;
-  eventPassword?: string;
+  eventPassword?: string[];
   organizerId: string;
   giftReceiverForLogInUser?: string;
   listOfInvitationForEvent: InvitationDto[];
+  logInUserIsAnOrganizer?: boolean;
 };
 
 export type InvitationDto = {
