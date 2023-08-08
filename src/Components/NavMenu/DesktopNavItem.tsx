@@ -14,6 +14,7 @@ const DesktopNavItem = ({ index, item }: DesktopNavItemProps) => {
 
   const signOutCallback = () => {
     if (logOut) {
+      localStorage.clear();
       logOut();
     }
   };

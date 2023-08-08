@@ -31,7 +31,9 @@ const ADD_EVENT_URL = "/event/add";
 const DELETE_EVENT_URL = "/event/delete";
 const JOIN_TO_EVENT_URL = "/event/join-to-the-event";
 const DRAW_LOT_EVENT_URL = "/event/draw";
-const GET_ALL_EVENT_PARTICIPANTS_URL = "/participants-by-event-id";
+const GET_ALL_EVENT_PARTICIPANTS_URL = "/event/participants-by-event-id";
+
+const eventImages = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
 
 const Events: React.FC = () => {
   const { token } = useAuth();
@@ -138,7 +140,7 @@ const Events: React.FC = () => {
   const deleteEventCallback = (id: string) => {
     try {
       const deleteEvent = async () => {
-        await _delete(`${DELETE_EVENT_URL}/${id}/${token}`)
+        await _delete(`${DELETE_EVENT_URL}/${id}`, token)
           .then((responseData: any) => {
             if (responseData) {
               const deleteEventsArray = events.filter(
@@ -159,7 +161,7 @@ const Events: React.FC = () => {
     }
   };
 
-  const openParticipantsCallback = (id: string) => {
+  const openParticipantsCallback =  async (id: string) => {
     setOpenParticipantsModal(true);
 
     if (id) {
@@ -167,44 +169,25 @@ const Events: React.FC = () => {
     }
 
     try {
-      const getAllEventParticipants = async () => {
-        await post(
-          `${GET_ALL_EVENT_PARTICIPANTS_URL}/${currentEventId}/${token}`,
-          {},
-          false,
-          token
-        )
-          .then((responseData: InvitationDto[]) => {
-            if (responseData) {
-              const participants: EventItemParticipantsType[] = [];
-
-              responseData.forEach((participantData) => {
-                const participant: EventItemParticipantsType = {
-                  participantName: participantData.participantName,
-                  participantSurname: participantData.participantSurname,
-                  participantEmail: participantData.participantEmail,
-                  takePartInInEvent: participantData.participantStatus,
-                };
-              });
-
-              const updatedEventsArray = events.map((event) => {
-                if (event.id === currentEventId) {
-                  event.participants = participants;
-                }
-
-                return event;
-              });
-
-              setEvents(updatedEventsArray);
+      const responseData = await get(`${GET_ALL_EVENT_PARTICIPANTS_URL}/${id}`, token)
+      if (responseData) {
+        const participants: EventItemParticipantsType[] = responseData.map((participantData: any) => ({
+          participantName: participantData.participantName,
+          participantSurname: participantData.participantSurname,
+          participantEmail: participantData.participantEmail,
+          takePartInInEvent: participantData.participantStatus,
+        }));
+  
+        setEvents((prevEvents) =>
+          prevEvents.map((event) => {
+            if (event.id === id) {
+              event.participants = participants;
             }
+            return event;
           })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-
-      getAllEventParticipants();
-    } catch (error: unknown) {
+        );
+      }
+    } catch (error) {
       console.log("error", error);
     }
   };
@@ -213,7 +196,7 @@ const Events: React.FC = () => {
     try {
       const drawLotsEvents = async () => {
         await post(
-          `${DRAW_LOT_EVENT_URL}/${currentEventId}/${token}`,
+          `${DRAW_LOT_EVENT_URL}/${currentEventId}`,
           {},
           false,
           token
@@ -253,9 +236,10 @@ const Events: React.FC = () => {
                   date: new Date(data.eventDate).toLocaleDateString("en-GB"),
                   name: data.name,
                   peopleAmount: data.numberOfPeople,
-                  picture: "../Assets/" + data.imageUrl,
+                  picture: data.imageUrl + "",
                   organizerId: data.organizerId,
                   logInUserIsAnOrganizer: data.logInUserIsAnOrganizer,
+                  giftReceiverForLogInUser: data.giftReceiverForLogInUser,
                   deleteCallback: deleteEventCallback,
                   openParticipantsCallback: openParticipantsCallback,
                 };
@@ -278,7 +262,7 @@ const Events: React.FC = () => {
   }, []);
 
   const getFlickingItems = () => {
-    return events.map((data, index) => {
+    return events.map((data) => {
       const {
         id,
         budget,
@@ -289,19 +273,26 @@ const Events: React.FC = () => {
         picture,
         organizerId,
         logInUserIsAnOrganizer,
+        giftReceiverForLogInUser,
       } = data;
+
+      const imageNumber = parseInt(picture);
+
+      const imageSrc = eventImages[imageNumber % eventImages.length];
+
       return (
         <EventItem
           id={id}
-          key={index}
+          key={id}
           budget={budget}
           currency={currency}
           date={date}
           name={name}
           peopleAmount={peopleAmount}
-          picture={picture}
+          picture={imageSrc}
           organizerId={organizerId}
           deleteCallback={deleteEventCallback}
+          giftReceiverForLogInUser={giftReceiverForLogInUser}
           openParticipantsCallback={openParticipantsCallback}
           logInUserIsAnOrganizer={logInUserIsAnOrganizer}
         ></EventItem>
@@ -336,10 +327,10 @@ const Events: React.FC = () => {
   };
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: getFlickingItems().length > 2 ? 2 : getFlickingItems().length,
     slidesToScroll: 1,
   };
 
