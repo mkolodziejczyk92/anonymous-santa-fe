@@ -12,6 +12,7 @@ export type EventItemPropsType = {
   participants?: EventItemParticipantsType[];
   logInUserIsAnOrganizer?: boolean;
   organizerId?: string;
+  giftReceiverForLogInUser?: string,
   deleteCallback?: (id: string) => void;
   openParticipantsCallback?: (id: string) => void;
 };
@@ -39,6 +40,7 @@ const EventItem = ({
   openParticipantsCallback,
   organizerId,
   logInUserIsAnOrganizer,
+  giftReceiverForLogInUser,
 }: EventItemPropsType) => {
   const { token } = useAuth();
 
@@ -57,20 +59,20 @@ const EventItem = ({
       <div className="EventItemPicture">
         {picture ? <img alt="eventPicture" src={picture} /> : <p>No picture</p>}
         <div className="EventItemButtonsContainer">
-          <button
-            className="EventsItemParticipantsButton"
-            style={{display: logInUserIsAnOrganizer ? "block" : "none"}}
-            onClick={openParticipants}
-          >
-            Participants
-          </button>
-          <button
-            className="EventsItemDeleteButton"
-            style={{display: logInUserIsAnOrganizer ? "block" : "none"}}
-            onClick={deleteEvent}
-          >
-            Delete
-          </button>
+        {logInUserIsAnOrganizer ? (
+      <>
+        <button className="EventsItemParticipantsButton" onClick={openParticipants}>
+          Participants
+        </button>
+        <button className="EventsItemDeleteButton" onClick={deleteEvent}>
+          Delete
+        </button>
+      </>
+    ) : (
+      <p>
+        <strong>{giftReceiverForLogInUser}</strong>
+      </p>
+    )}
         </div>
       </div>
       <div className="EventItemData">
