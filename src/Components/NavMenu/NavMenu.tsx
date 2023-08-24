@@ -22,9 +22,9 @@ const NavMenu = ({ token }: { token: string }) => {
 
   return (
     <div>
-      <div className="nav-bar">
+      {/* <div className="nav-bar">
         <h1 className="nav-bar-title">Anonymous Santa</h1>
-      </div>
+      </div> */}
       <nav className={"nav-menu active"}>
         <ul className="nav-menu-ul">
           {token ? loggedInNavMenuItems() : notLoggedInNavMenuItems()}

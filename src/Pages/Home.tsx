@@ -1,15 +1,13 @@
-import image from "../Assets/home.jpg";
+import image from "../Assets/hometrans.png";
 
 const Home = () => {
   return (
     <div className="Container">
-      <h1 style={{ display: "flex", justifyContent: "center" }}>Home</h1>
       <img
         alt="homeImage"
-        style={{ backgroundColor: "transparent", width: "250px" }}
+        style={{ backgroundColor: "transparent", height:"130%" }}
         src={image}
       ></img>
-      <p>Description here</p>
     </div>
   );
 };

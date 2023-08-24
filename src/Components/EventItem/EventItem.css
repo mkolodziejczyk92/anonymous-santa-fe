@@ -1,8 +1,8 @@
 .EventItem {
   list-style-type: none;
   background-color: #56746c;
-  width: 400px;
-  height: 250px;
+  width: 500px;
+  height: 300px;
   display: flex;
   margin: 5px;
   padding: 10px;
@@ -35,6 +35,9 @@
   display: block;
   margin: 5px 10px 5px 10px;
   padding-right: 5px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  max-height: 2em;
 }
 
 .EventItemData p {
