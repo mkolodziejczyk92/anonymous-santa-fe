@@ -44,7 +44,7 @@ const JoinToEventForm = ({ formCallback, closeForm }: JoinToEventFormProps) => {
 
   return (
     <div className="FormContainer">
-      <div className="FormTitle">Joint to event!</div>
+      <div className="FormTitle"></div>
       <form className="Form" onSubmit={handleSubmit(onSubmit)}>
         <input className="FormInput" {...register("id", {})} placeholder="Id" />
         <input
@@ -54,7 +54,6 @@ const JoinToEventForm = ({ formCallback, closeForm }: JoinToEventFormProps) => {
         />
         <input
           className="FormInput"
-          type="password"
           {...register("password", {})}
           placeholder="Password"
         />

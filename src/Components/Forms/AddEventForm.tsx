@@ -28,6 +28,7 @@ const AddEventForm = ({ formCallback, closeForm }: AddEventFormProps) => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
     control,
   } = useForm<AddEventFormDataType>();
@@ -38,6 +39,16 @@ const AddEventForm = ({ formCallback, closeForm }: AddEventFormProps) => {
   });
 
   const onSubmit = async (data: any) => {
+    const numberOfParticipants = fields.length;
+    const peopleAmountIn = parseInt(data.peopleAmount);
+
+    if (numberOfParticipants !== peopleAmountIn) {
+      setError('peopleAmount', {
+        type: 'manual',
+        message: 'Number of participants must match people amount field',
+      });
+      return;
+    }
     console.log("onSubmit", data);
     const { name, date, peopleAmount, budget, currency, participants } = data;
 
@@ -65,7 +76,7 @@ const AddEventForm = ({ formCallback, closeForm }: AddEventFormProps) => {
 
   return (
     <div className="FormContainer AddEventFormContainer">
-      <div className="FormTitle">Add event</div>
+      <div className="FormTitle"></div>
       <form className="Form" onSubmit={handleSubmit(onSubmit)}>
         <input
           className="FormInput AddEventFormInput"
@@ -77,7 +88,7 @@ const AddEventForm = ({ formCallback, closeForm }: AddEventFormProps) => {
               maxLength: (v) =>
                 v.length <= 32 || "Name must have at most 32 letters",
               matchPattern: (v) =>
-                /^[a-zA-Z]+$/.test(v) || "Name must contain only letters",
+              /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ ]{1,50}$/.test(v) || "Name must contain only letters",
             },
           })}
           placeholder="Name"

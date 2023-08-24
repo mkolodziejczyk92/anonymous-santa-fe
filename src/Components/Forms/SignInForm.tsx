@@ -63,7 +63,7 @@ const SignInForm = ({ formCallback }: SignInFormProps) => {
 
   return (
     <div className="FormContainer">
-      <div className="FormTitle">SignIn form</div>
+      <div className="FormTitle"></div>
       <form className="Form" onSubmit={handleSubmit(onSubmit)}>
         <input
           className="FormInput"
@@ -77,9 +77,6 @@ const SignInForm = ({ formCallback }: SignInFormProps) => {
           placeholder="Password"
         />
         <input className="FormSubmitButton" type="submit" value="Log In" />
-        <Link style={{ textDecoration: "none" }} to="/signup">
-          Do not have account? Sign Up!
-        </Link>
       </form>
     </div>
   );
