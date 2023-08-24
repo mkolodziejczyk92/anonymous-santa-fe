@@ -11,6 +11,7 @@ export type EventDto = {
   giftReceiverForLogInUser?: string;
   listOfInvitationForEvent: InvitationDto[];
   logInUserIsAnOrganizer?: boolean;
+  afterDraw?: boolean;
 };
 
 export type InvitationDto = {

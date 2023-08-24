@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
+import image from "../Assets/Ev.png";
 
 import JoinToEventForm, {
   JoinToEventFormDataType,
@@ -15,15 +16,16 @@ import EventItem, {
 import { EventDto, InvitationDto } from "../Dto/DtoProvider";
 import axiosInstance, { post, _delete, get } from "../Api/axios";
 import { useAuth } from "../Context/Auth/AuthContextPovider";
+import { useNavigate } from "react-router-dom";
 
-import pic1 from "../Assets/pic1.jpg";
-import pic2 from "../Assets/pic2.jpg";
-import pic3 from "../Assets/pic3.jpg";
-import pic4 from "../Assets/pic4.jpg";
-import pic5 from "../Assets/pic5.jpg";
-import pic6 from "../Assets/pic6.jpg";
-import pic7 from "../Assets/pic7.jpg";
-import pic8 from "../Assets/pic8.jpg";
+import pic1 from "../Assets/pic1.png";
+import pic2 from "../Assets/pic2.png";
+import pic3 from "../Assets/pic3.png";
+import pic4 from "../Assets/pic4.png";
+import pic5 from "../Assets/pic5.png";
+import pic6 from "../Assets/pic6.png";
+import pic7 from "../Assets/pic7.png";
+import pic8 from "../Assets/pic8.png";
 
 
 const GET_EVENTS_URL = "/event/user-events";
@@ -37,6 +39,18 @@ const eventImages = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
 
 const Events: React.FC = () => {
   const { token } = useAuth();
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+
+  const deleteEventCallback = (id: string) => {
+    setOpenDeleteModal(true);
+    setCurrentEventId(id);
+  };
+
+const closeDeleteModalWindow = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const navigate = useNavigate();
 
   const [addEventFormVisible, setAddEventFormVisible] =
     useState<boolean>(false);
@@ -65,6 +79,7 @@ const Events: React.FC = () => {
         await post(`${JOIN_TO_EVENT_URL}`, JSON.stringify(jsonData), false, token)
           .then((responseData) => {
             if (responseData) {
+              navigate("/");
             }
           })
           .catch((error) => {
@@ -120,6 +135,7 @@ const Events: React.FC = () => {
         await post(`${ADD_EVENT_URL}`, dataToSend, false, token)
           .then((responseData) => {
             if (responseData) {
+              navigate("/");
             }
           })
           .catch((error) => {
@@ -137,16 +153,15 @@ const Events: React.FC = () => {
     setAddEventFormVisible((prevState) => !prevState);
   };
 
-  const deleteEventCallback = (id: string) => {
+  const deleteEvent = () => {
     try {
       const deleteEvent = async () => {
-        await _delete(`${DELETE_EVENT_URL}/${id}`, token)
+        await _delete(`${DELETE_EVENT_URL}/${currentEventId}`, token)
           .then((responseData: any) => {
             if (responseData) {
               const deleteEventsArray = events.filter(
-                (event) => event.id !== id
+                (event) => event.id !== currentEventId
               );
-
               setEvents(deleteEventsArray);
             }
           })
@@ -156,8 +171,12 @@ const Events: React.FC = () => {
       };
 
       deleteEvent();
+
+      setOpenDeleteModal(false);
     } catch (error: unknown) {
       console.log("error", error);
+
+      setOpenDeleteModal(false);
     }
   };
 
@@ -203,6 +222,7 @@ const Events: React.FC = () => {
         )
           .then((responseData) => {
             if (responseData) {
+              navigate("/");
             }
           })
           .catch((error) => {
@@ -240,6 +260,7 @@ const Events: React.FC = () => {
                   organizerId: data.organizerId,
                   logInUserIsAnOrganizer: data.logInUserIsAnOrganizer,
                   giftReceiverForLogInUser: data.giftReceiverForLogInUser,
+                  afterDraw: data.afterDraw,
                   deleteCallback: deleteEventCallback,
                   openParticipantsCallback: openParticipantsCallback,
                 };
@@ -274,6 +295,7 @@ const Events: React.FC = () => {
         organizerId,
         logInUserIsAnOrganizer,
         giftReceiverForLogInUser,
+        afterDraw,
       } = data;
 
       const imageNumber = parseInt(picture);
@@ -295,6 +317,7 @@ const Events: React.FC = () => {
           giftReceiverForLogInUser={giftReceiverForLogInUser}
           openParticipantsCallback={openParticipantsCallback}
           logInUserIsAnOrganizer={logInUserIsAnOrganizer}
+          afterDraw={afterDraw}
         ></EventItem>
       );
     });
@@ -310,6 +333,16 @@ const Events: React.FC = () => {
     });
 
     return participants ?? [];
+  };
+
+  const getCurrentEventDrawInformation = () => {
+    const eventItem = events.find((eventItem) => eventItem.id === currentEventId);
+
+    if (eventItem) {
+    const afterDrawValue = eventItem.afterDraw;
+    return afterDrawValue;
+    }
+    return false;
   };
 
   const allCurrentParticipantsTakePartIn = () => {
@@ -334,9 +367,11 @@ const Events: React.FC = () => {
     slidesToScroll: 1,
   };
 
-  return (
-    <div className="Container">
-      <h1 style={{ display: "flex", justifyContent: "center" }}>Events</h1>
+ return (
+    <div className="Container">   
+      <h1 style={{ display: "flex", justifyContent: "center" }}>
+      <img src={image} alt="Events"/>
+      </h1>
       <div className="EventsButtonContainer">
         <button className="EventsButton" onClick={addEventsButtonClicked}>
           AddEvent
@@ -408,7 +443,7 @@ const Events: React.FC = () => {
             <div className="EventsParticipantsModalButtonsContainer">
               <button
                 className="EventsParticipantsModalDrawLotsButton"
-                disabled={allCurrentParticipantsTakePartIn() ? false : true}
+                disabled={allCurrentParticipantsTakePartIn() && getCurrentEventDrawInformation() ? false : true}
                 onClick={drawLotsParticipants}
               >
                 Draw Lots!
@@ -423,8 +458,29 @@ const Events: React.FC = () => {
           </div>
         </div>
       )}
+      {openDeleteModal && (
+        <div className="EventsDeleteModalWindow">
+          <div className="EventsDeleteModalContainer">
+            <h3 className="EventsDeleteModalTitle">Confirm delete event</h3>
+            <div className="EventsDeleteModalButtonsContainer">
+              <button
+                className="EventsDeleteModalDeleteButton"
+                onClick={deleteEvent}
+              >
+                Delete
+              </button>
+              <button
+                className="EventsDeleteModalCancelButton"
+                onClick={closeDeleteModalWindow}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+ }
 
 export default Events;

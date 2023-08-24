@@ -74,6 +74,8 @@ const AddEventForm = ({ formCallback, closeForm }: AddEventFormProps) => {
             validate: {
               minLength: (v) =>
                 v.length >= 3 || "Name must have at least 3 letters",
+              maxLength: (v) =>
+                v.length <= 32 || "Name must have at most 32 letters",
               matchPattern: (v) =>
                 /^[a-zA-Z]+$/.test(v) || "Name must contain only letters",
             },

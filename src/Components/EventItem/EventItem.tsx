@@ -12,6 +12,7 @@ export type EventItemPropsType = {
   participants?: EventItemParticipantsType[];
   logInUserIsAnOrganizer?: boolean;
   organizerId?: string;
+  afterDraw?: boolean,
   giftReceiverForLogInUser?: string,
   deleteCallback?: (id: string) => void;
   openParticipantsCallback?: (id: string) => void;
@@ -38,9 +39,9 @@ const EventItem = ({
   picture,
   deleteCallback,
   openParticipantsCallback,
-  organizerId,
   logInUserIsAnOrganizer,
   giftReceiverForLogInUser,
+  afterDraw,
 }: EventItemPropsType) => {
   const { token } = useAuth();
 
