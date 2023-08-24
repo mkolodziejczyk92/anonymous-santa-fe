@@ -374,7 +374,7 @@ const closeDeleteModalWindow = () => {
       </h1>
       <div className="EventsButtonContainer">
         <button className="EventsButton" onClick={addEventsButtonClicked}>
-          AddEvent
+          Add event
         </button>
         <button className="EventsButton" onClick={joinToEventButtonClicked}>
           Join to event
@@ -482,5 +482,4 @@ const closeDeleteModalWindow = () => {
     </div>
   );
  }
-
 export default Events;

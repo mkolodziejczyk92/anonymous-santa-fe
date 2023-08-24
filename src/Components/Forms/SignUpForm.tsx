@@ -80,7 +80,7 @@ const SignUpForm = ({ formCallback }: SignUpFormProps) => {
 
   return (
     <div className="FormContainer">
-      <div className="FormTitle">SignUp form</div>
+      <div className="FormTitle"></div>
       <form className="Form" onSubmit={handleSubmit(onSubmit)}>
         <input
           className="FormInput"
