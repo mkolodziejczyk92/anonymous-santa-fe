@@ -69,7 +69,7 @@ const closeDeleteModalWindow = () => {
 
   const sendJoinToEventButtonClicked = (data: JoinToEventFormDataType) => {
     const dataToSend: Map<string, string> = new Map();
-    dataToSend.set("eventID", data.id);
+    dataToSend.set("eventName", data.eventName);
     dataToSend.set("userEmail", data.email);
     dataToSend.set("eventPassword", data.password);
   
@@ -432,7 +432,11 @@ const closeDeleteModalWindow = () => {
                             ? "EventsParticipantsModalItemTakePartInButton"
                             : "EventsParticipantsModalItemNotTakePartInButton"
                         }
-                      ></button>
+                      >
+                        <span className="button-text">
+                         {participant.takePartInInEvent ? "Joined the event" : "Not in the event"}
+                         </span>
+                      </button>
                     </div>
                   );
                 })
@@ -443,9 +447,9 @@ const closeDeleteModalWindow = () => {
             <div className="EventsParticipantsModalButtonsContainer">
               <button
                 className="EventsParticipantsModalDrawLotsButton"
-                disabled={allCurrentParticipantsTakePartIn() && getCurrentEventDrawInformation() ? false : true}
-                onClick={drawLotsParticipants}
-              >
+                disabled={allCurrentParticipantsTakePartIn() 
+                  && !getCurrentEventDrawInformation() ? false : true}
+                onClick={drawLotsParticipants}>
                 Draw Lots!
               </button>
               <button
@@ -455,6 +459,10 @@ const closeDeleteModalWindow = () => {
                 Close
               </button>
             </div>
+            <span className="informationDrawLots">
+                  {allCurrentParticipantsTakePartIn() ? "" : "You can draw lots when everyone will join to the event"}
+                  {getCurrentEventDrawInformation() ? "You can draw only once" : ""}
+                </span>
           </div>
         </div>
       )}
