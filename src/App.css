@@ -130,12 +130,36 @@
   margin-left: 5px;
 }
 
+.button-text {
+  display: none;
+}
+
 .EventsParticipantsModalItemTakePartInButton {
   background-color: greenyellow;
 }
 
 .EventsParticipantsModalItemNotTakePartInButton {
   background-color: red;
+}
+
+.EventsParticipantsModalItemTakePartInButton:hover .button-text{
+color: green;
+font-weight: bold;
+font-size: 10px;
+}
+
+.EventsParticipantsModalItemNotTakePartInButton:hover .button-text{
+  color: black;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.EventsParticipantsModalItemTakePartInButton:hover .button-text,
+.EventsParticipantsModalItemNotTakePartInButton:hover .button-text {
+  display: block;
+  margin-left: -10px;
+  position: relative;
+  
 }
 
 .EventsParticipantsModalButtonsContainer {
