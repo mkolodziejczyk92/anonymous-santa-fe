@@ -447,9 +447,15 @@ const closeDeleteModalWindow = () => {
             <div className="EventsParticipantsModalButtonsContainer">
               <button
                 className="EventsParticipantsModalDrawLotsButton"
+<<<<<<< Updated upstream
                 disabled={allCurrentParticipantsTakePartIn() 
                   && !getCurrentEventDrawInformation() ? false : true}
                 onClick={drawLotsParticipants}>
+=======
+                disabled={allCurrentParticipantsTakePartIn() && getCurrentEventDrawInformation() ? true : false}
+                onClick={drawLotsParticipants}
+              >
+>>>>>>> Stashed changes
                 Draw Lots!
               </button>
               <button
