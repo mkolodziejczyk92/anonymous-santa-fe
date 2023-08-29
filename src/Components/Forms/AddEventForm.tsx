@@ -139,14 +139,12 @@ const AddEventForm = ({ formCallback, closeForm }: AddEventFormProps) => {
           className="FormInput AddEventFormInput"
           {...register("currency", {
             required: "Please enter currency.",
-            validate: {
-              minLength: (v) =>
-                v.length >= 1 || "Currency must have at least 1 letters",
-              matchPattern: (v) =>
-                /^[a-zA-Z]+$/.test(v) || "Currency must contain only letters",
+            pattern: {
+              value: /^(PLN|USD|EUR)$/,
+              message: "Invalid currency. Please enter PLN, USD, or EUR.",
             },
           })}
-          placeholder="Currency"
+          placeholder="Currency (EUR, USD, PLN)"
         />
         <small className="FormErrorMessage">
           <ErrorMessage errors={errors} name="currency" />

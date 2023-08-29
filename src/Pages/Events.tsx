@@ -434,7 +434,7 @@ const closeDeleteModalWindow = () => {
                         }
                       >
                         <span className="button-text">
-                         {participant.takePartInInEvent ? "Joined the event" : "Not in the event"}
+                         {participant.takePartInInEvent ? "Joined!" : "Not joined!"}
                          </span>
                       </button>
                     </div>
