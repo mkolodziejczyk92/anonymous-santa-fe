@@ -12,6 +12,7 @@ export type EventDto = {
   listOfInvitationForEvent: InvitationDto[];
   logInUserIsAnOrganizer?: boolean;
   afterDraw?: boolean;
+  eventCode?: string;
 };
 
 export type InvitationDto = {
