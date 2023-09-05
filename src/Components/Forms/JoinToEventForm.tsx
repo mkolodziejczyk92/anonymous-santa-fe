@@ -9,7 +9,7 @@ type JoinToEventFormProps = {
 };
 
 export type JoinToEventFormDataType = {
-  eventName: string;
+  eventCode: string;
   email: string;
   password: string;
 };
@@ -21,7 +21,7 @@ const JoinToEventForm = ({ formCallback, closeForm }: JoinToEventFormProps) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      eventName: "",
+      eventCode: "",
       email: "",
       password: "",
     } as JoinToEventFormDataType,
@@ -29,10 +29,10 @@ const JoinToEventForm = ({ formCallback, closeForm }: JoinToEventFormProps) => {
 
   const onSubmit = async (data: any) => {
     console.log("onSubmit", data);
-    const { eventName, email, password } = data;
+    const { eventCode, email, password } = data;
 
     if (formCallback) {
-      formCallback({ eventName, email, password });
+      formCallback({ eventCode, email, password });
     }
   };
 
@@ -46,7 +46,7 @@ const JoinToEventForm = ({ formCallback, closeForm }: JoinToEventFormProps) => {
     <div className="FormContainer">
       <div className="FormTitle"></div>
       <form className="Form" onSubmit={handleSubmit(onSubmit)}>
-        <input className="FormInput" {...register("eventName", {})} placeholder="Event name" />
+        <input className="FormInput" {...register("eventCode", {})} placeholder="Event code" />
         <input
           className="FormInput"
           {...register("email", {})}

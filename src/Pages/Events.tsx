@@ -69,7 +69,7 @@ const closeDeleteModalWindow = () => {
 
   const sendJoinToEventButtonClicked = (data: JoinToEventFormDataType) => {
     const dataToSend: Map<string, string> = new Map();
-    dataToSend.set("eventName", data.eventName);
+    dataToSend.set("eventCode", data.eventCode);
     dataToSend.set("userEmail", data.email);
     dataToSend.set("eventPassword", data.password);
   
