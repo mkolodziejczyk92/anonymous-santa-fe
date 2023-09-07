@@ -27,10 +27,10 @@ export type InvitationDto = {
 };
 
 export type UserDto = {
-  id: number;
+  id?: number;
   email: string;
-  password: string;
+  password?: string;
   firstName: string;
   lastName: string;
-  userRoles: string[];
+  userRoles?: string[];
 };
