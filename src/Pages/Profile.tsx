@@ -14,7 +14,7 @@ export const colourOptions = [
     { value: 'yellow', label: 'Yellow' },
 ];
 
-const Profile: React.FC = () => {
+const Profile = () => {
     const { token } = useAuth();
     const [userData, setUserData] = useState<UserDto | null>(null);
 
