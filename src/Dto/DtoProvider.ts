@@ -33,4 +33,5 @@ export type UserDto = {
   firstName: string;
   lastName: string;
   userRoles?: string[];
+  preferredGifts?: string[];
 };
