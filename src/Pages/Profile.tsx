@@ -42,22 +42,22 @@ const Profile = () => {
 
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
-        const formData = new FormData(formRef.current!); 
+
+        const formData = new FormData(formRef.current!);
         const selectedGifts = formData.getAll("gifts");
-        
+
         const allEmptyStrings = selectedGifts.every(gift => gift === "");
 
         if (allEmptyStrings) {
-          setShowGiftsErrorModal(true);
-          return;
+            setShowGiftsErrorModal(true);
+            return;
         }
 
         const selectedGiftsList = selectedGifts.map((gift) => gift.toString());
-      
+
         try {
-           await post(`${SAVE_USER_GIFT_CHOICES}`, JSON.stringify(selectedGiftsList), false , token);
-           setShowConfirmationModal(true);
+            await post(`${SAVE_USER_GIFT_CHOICES}`, JSON.stringify(selectedGiftsList), false , token);
+            setShowConfirmationModal(true);
         } catch (error) {
             console.log(error);
         }
@@ -81,7 +81,7 @@ const Profile = () => {
         }
     };
 
-    const welcomeTextStyle = {
+    const profileChristmasFont = {
         fontSize: '50px',
         fontFamily: 'christmastFont',
         color: '#B8860B',
@@ -94,58 +94,65 @@ const Profile = () => {
     Below you will find the form you need to complete. It will help Santa choose the right present for you.`;
     }
 
+    const chooseGiftText = 'Please choose what you would like to get as a gift and your dreams will come true! '
+
+
+
     return (
         <div className="Container">
-          <h1 style={{ display: "flex", justifyContent: "center" }}>
-            <img src={image} alt="Profile" />
-          </h1>
-          <div className='UserDetailsContainer' style={{ marginBottom: '20px' }}>
-            <p style={welcomeTextStyle}>{welcomeText}</p>
-          </div>
-          <div className='UserSpecificationContainer'>
-            <form ref={formRef} method="post" onSubmit={handleFormSubmit}>
-              <Select
-                isMulti
-                name="gifts"
-                options={giftOptions}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-          {showConfirmationModal && (
-            <div className="ProfileGiftsModalWindow"> 
-             <div className="ProfileConfirmModalContainer">
-                <div className="ProfileConfirmationModal">
-                <h3 className="ProfileConfirmModalTitle">Your choices have been saved.</h3>
-                <button
-                className="ProfileConfirmModalOkButton"
-                onClick={closeConfirmationModal}
-                >
-                OK
-              </button>
+            <h1 style={{ display: "flex", justifyContent: "center" }}>
+                <img src={image} alt="Profile" />
+            </h1>
+            <div className='UserDetailsContainer' style={{ marginBottom: '20px' }}>
+                <p style={profileChristmasFont}>{welcomeText}</p>
+            </div>
+            <div className='UserSpecificationContainer'>
+                <div>
+                    <p style={profileChristmasFont}>{chooseGiftText}</p>
+                    <form className="gift-form" ref={formRef} method="post" onSubmit={handleFormSubmit}>
+                        <Select
+                            isMulti
+                            name="gifts"
+                            options={giftOptions}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                        />
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
-             </div>
             </div>
-          )}
-          {showGiftsErrorModal && (
-             <div className="ProfileGiftsModalWindow"> 
-             <div className="ProfileErrorGiftModalContainer">
-             <div className="ProfileErorrConfirmationModal">
-                 <h3 className="ProfileErrorModalTitle">Please choose gifts!</h3>
-             <button
-                 className="ProfileErrorModalOkButton"
-                 onClick={closeGiftsErrorModal}
-                 >
-                  OK
-                </button>
-             </div>
-            </div>
-            </div>
-        )}
+            {showConfirmationModal && (
+                <div className="ProfileGiftsModalWindow">
+                    <div className="ProfileConfirmModalContainer">
+                        <div className="ProfileConfirmationModal">
+                            <h3 className="ProfileConfirmModalTitle">Your choices have been saved.</h3>
+                            <button
+                                className="ProfileConfirmModalOkButton"
+                                onClick={closeConfirmationModal}
+                            >
+                                OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {showGiftsErrorModal && (
+                <div className="ProfileGiftsModalWindow">
+                    <div className="ProfileErrorGiftModalContainer">
+                        <div className="ProfileErorrConfirmationModal">
+                            <h3 className="ProfileErrorModalTitle">Please choose gifts!</h3>
+                            <button
+                                className="ProfileErrorModalOkButton"
+                                onClick={closeGiftsErrorModal}
+                            >
+                                OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-      );
+    );
 }
 
 export default Profile;
