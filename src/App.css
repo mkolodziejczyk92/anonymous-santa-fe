@@ -350,3 +350,7 @@ font-size: 10px;
   transform: translateX(-50%); 
   align-self: center;
 }
+
+.gift-form {
+  margin-top: -50px; 
+}
