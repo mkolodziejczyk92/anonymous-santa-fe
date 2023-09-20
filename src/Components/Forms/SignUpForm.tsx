@@ -75,6 +75,7 @@ const SignUpForm = ({ formCallback }: SignUpFormProps) => {
       });
     } catch (error: unknown) {
       console.log("error", error);
+      alert("Email already taken!")
     }
   };
 
