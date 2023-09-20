@@ -6,7 +6,7 @@ import { UserDto } from "../Dto/DtoProvider";
 import Select from 'react-select';
 
 const GET_USER_PROFILE = "/user/profile";
-const SAVE_USER_GIFT_CHOICES = "/user/gifts"
+const USER_GIFT_CHOICES = "/user/gifts"
 
 export const giftOptions = [
     { value: 'clothes', label: 'Clothes' },
@@ -26,6 +26,7 @@ const Profile = () => {
     const formRef = useRef<HTMLFormElement | null>(null);
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [showGiftsErrorModal, setShowGiftsErrorModal] = useState(false);
+    const [userGifts, setUserGifts] = useState<String | null> (null)
 
     const closeConfirmationModal = () => {
         setShowConfirmationModal(false);
@@ -33,11 +34,11 @@ const Profile = () => {
 
     const closeGiftsErrorModal = () => {
         setShowGiftsErrorModal(false);
-    }
-
+    }   
 
     useEffect(() => {
         getUserDetails();
+        getUserGifts();
     }, []);
 
     const handleFormSubmit = async (e: React.FormEvent) => {
@@ -56,8 +57,9 @@ const Profile = () => {
         const selectedGiftsList = selectedGifts.map((gift) => gift.toString());
 
         try {
-            await post(`${SAVE_USER_GIFT_CHOICES}`, JSON.stringify(selectedGiftsList), false , token);
+            await post(`${USER_GIFT_CHOICES}`, JSON.stringify(selectedGiftsList), false , token);
             setShowConfirmationModal(true);
+            setUserGifts('You prefer to get ' + selectedGiftsList.join(", ") + '.');
         } catch (error) {
             console.log(error);
         }
@@ -71,7 +73,7 @@ const Profile = () => {
                 const userDetails: UserDto = {
                     email: response.email,
                     firstName: response.firstName,
-                    lastName: response.lastName,
+                    lastName: response.lastName
                 };
 
                 setUserData(userDetails);
@@ -80,6 +82,22 @@ const Profile = () => {
             console.log(error);
         }
     };
+
+    const getUserGifts = async () => {
+        try{
+            const response = await get(`${USER_GIFT_CHOICES}`, token);
+
+            if(response){
+            const userGifts: string = response;
+            setUserGifts(userGifts)
+            }
+           
+        } catch(error) {
+            console.log(error)
+        }
+
+        
+    }
 
     const profileChristmasFont = {
         fontSize: '50px',
@@ -91,7 +109,8 @@ const Profile = () => {
 
     if (userData) {
         welcomeText = `Hello ${userData.firstName} ${userData.lastName}! Your email address that you used when registering is ${userData.email}. 
-    Below you will find the form you need to complete. It will help Santa choose the right present for you.`;
+    Below you will find the form you need to complete. It will help Santa choose the right present for you.
+     ${userGifts}`;
     }
 
     const chooseGiftText = 'Please choose what you would like to get as a gift and your dreams will come true! '
