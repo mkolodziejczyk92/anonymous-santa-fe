@@ -17,7 +17,7 @@
 # Anonymous Santa
 
 ### Introduce
-
+***
 This project is a full-featured restful web application designed to help users create and manage Santa Claus or other events in which we want to anonymously buy another person a gift.
 
 The main part allows users:
@@ -30,6 +30,7 @@ The main part allows users:
 - After all you can easily delete the event you want.
 
 ### Running the application
+***
 **1.** Clone the source code from Github:
 
 Frontend repository:
